@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Bonafide Certificate {{certificate_no}}</title>
+<style>
+  @page { size: A4; margin: 14mm; }
+  body { margin: 0; background: #f2f2f2; font-family: "Times New Roman", Georgia, serif; color: #111; }
+  .sheet { width: 190mm; min-height: 267mm; margin: 10mm auto; padding: 16mm 18mm; background: #fff;
+           border: 3px double #1a3a6b; box-sizing: border-box; }
+  .header { text-align: center; border-bottom: 2px solid #1a3a6b; padding-bottom: 10px; }
+  .header h1 { margin: 0; font-size: 24pt; letter-spacing: .5px; color: #1a3a6b; }
+  .header p { margin: 6px 0 0; font-size: 11pt; }
+  .meta { display: flex; justify-content: space-between; font-size: 11pt; margin: 18px 0 26px; }
+  h2 { text-align: center; font-size: 16pt; letter-spacing: 3px; text-decoration: underline; margin: 0 0 26px; }
+  .body-text { font-size: 13pt; line-height: 2; text-align: justify; }
+  .body-text strong { text-transform: uppercase; }
+  table { width: 100%; border-collapse: collapse; margin: 26px 0; font-size: 11.5pt; }
+  th, td { border: 1px solid #999; padding: 7px 10px; text-align: left; }
+  th { width: 34%; background: #eef2f8; font-weight: bold; }
+  .sign { margin-top: 60px; display: flex; justify-content: space-between; font-size: 11.5pt; }
+  .sign .right { text-align: center; }
+  .sign .line { margin-top: 46px; border-top: 1px solid #333; padding-top: 5px; }
+  .note { margin-top: 28px; font-size: 9.5pt; color: #555; text-align: center; }
+  @media print { body { background: #fff; } .sheet { margin: 0; border: 3px double #1a3a6b; } }
+</style>
+</head>
+<body>
+<div class="sheet">
+  <div class="header">
+    <h1>{{institute_name}}</h1>
+    <p>{{institute_address}}</p>
+  </div>
+
+  <div class="meta">
+    <span><strong>Ref. No.:</strong> {{certificate_no}}</span>
+    <span><strong>Date:</strong> {{issue_date}}</span>
+  </div>
+
+  <h2>BONAFIDE CERTIFICATE</h2>
+
+  <p class="body-text">
+    This is to certify that {{salutation}}<strong>{{student_name}}</strong>, {{relation}} of
+    Mr. {{father_name}}, bearing Roll No. <strong>{{roll_no}}</strong>, is a bonafide student of this
+    institute. {{pronoun}} is studying in Year {{current_year}}, Semester {{current_semester}} of
+    {{course_name}} in the Department of {{department_name}} during the academic year
+    {{academic_year}}. As per the records of this institute, {{possessive}} date of birth is
+    {{dob}}.
+  </p>
+
+  <p class="body-text">
+    This certificate is issued on the request of the student for the purpose of
+    <strong>{{purpose}}</strong>.
+  </p>
+
+  <table>
+    <tr><th>Certificate No.</th><td>{{certificate_no}}</td></tr>
+    <tr><th>Roll No.</th><td>{{roll_no}}</td></tr>
+    <tr><th>Student Name</th><td>{{student_name}}</td></tr>
+    <tr><th>Father's Name</th><td>{{father_name}}</td></tr>
+    <tr><th>Date of Birth</th><td>{{dob}}</td></tr>
+    <tr><th>Department</th><td>{{department_name}}</td></tr>
+    <tr><th>Course</th><td>{{course_name}}</td></tr>
+    <tr><th>Year / Semester</th><td>Year {{current_year}} / Semester {{current_semester}}</td></tr>
+    <tr><th>Admission Year</th><td>{{admission_year}}</td></tr>
+    <tr><th>Academic Year</th><td>{{academic_year}}</td></tr>
+    <tr><th>Purpose</th><td>{{purpose}}</td></tr>
+  </table>
+
+  <div class="sign">
+    <div>
+      <div><strong>Place:</strong> {{place}}</div>
+      <div><strong>Date:</strong> {{issue_date}}</div>
+    </div>
+    <div class="right">
+      <div class="line">{{principal_name}}<br>Principal</div>
+    </div>
+  </div>
+
+  <p class="note">This is a computer-generated certificate. Verify with reference number {{certificate_no}}.</p>
+</div>
+</body>
+</html>

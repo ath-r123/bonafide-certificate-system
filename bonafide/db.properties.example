@@ -1,0 +1,6 @@
+# Copy to db.properties and fill in your own credentials. db.properties is git-ignored.
+db.url=jdbc:mysql://localhost:3306/bonafide_db
+db.user=bonafide
+db.password=CHANGE_ME
+# If your server has TLS disabled, use instead:
+# db.url=jdbc:mysql://localhost:3306/bonafide_db?sslMode=DISABLED&allowPublicKeyRetrieval=true
