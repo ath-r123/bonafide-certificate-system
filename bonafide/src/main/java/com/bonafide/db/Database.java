@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Properties;
 
 /**
@@ -46,5 +47,30 @@ public final class Database {
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(url, user, password);
+    }
+
+    /** Applies the one-time naming update for databases created by earlier releases. */
+    public static void applyBrandingUpdates() {
+        String updateInstitute = """
+                UPDATE institute SET name = 'Apex Engineering College'
+                WHERE institute_id = 1 AND name = 'Sinhgad College of Engineering'""";
+        String updateCourses = """
+                UPDATE course SET course_name = CASE course_name
+                    WHEN 'B.E. Computer Engineering' THEN 'B.Tech Computer Engineering'
+                    WHEN 'M.E. Computer Engineering' THEN 'M.Tech Computer Engineering'
+                    WHEN 'B.E. Information Technology' THEN 'B.Tech Information Technology'
+                    WHEN 'B.E. Electronics and Telecommunication' THEN 'B.Tech Electronics and Telecommunication'
+                    WHEN 'B.E. Mechanical Engineering' THEN 'B.Tech Mechanical Engineering'
+                END
+                WHERE course_name IN (
+                    'B.E. Computer Engineering', 'M.E. Computer Engineering',
+                    'B.E. Information Technology', 'B.E. Electronics and Telecommunication',
+                    'B.E. Mechanical Engineering')""";
+        try (Connection connection = getConnection(); Statement statement = connection.createStatement()) {
+            statement.executeUpdate(updateInstitute);
+            statement.executeUpdate(updateCourses);
+        } catch (SQLException e) {
+            throw new DataAccessException("Failed to apply college naming updates: " + e.getMessage(), e);
+        }
     }
 }

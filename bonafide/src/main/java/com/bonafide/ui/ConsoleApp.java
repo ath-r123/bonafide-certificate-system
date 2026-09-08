@@ -4,6 +4,7 @@ import com.bonafide.dao.CertificateDao;
 import com.bonafide.dao.CourseDao;
 import com.bonafide.dao.InstituteDao;
 import com.bonafide.dao.StudentDao;
+import com.bonafide.db.Database;
 import com.bonafide.exception.DataAccessException;
 import com.bonafide.exception.ValidationException;
 import com.bonafide.model.Certificate;
@@ -37,6 +38,7 @@ public class ConsoleApp {
     public static void main(String[] args) {
         Institute institute;
         try {
+            Database.applyBrandingUpdates();
             institute = new InstituteDao().find();   // also verifies the connection at startup
         } catch (DataAccessException e) {
             System.err.println("Startup failed: " + e.getMessage());

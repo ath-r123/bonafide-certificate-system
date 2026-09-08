@@ -78,18 +78,39 @@ CREATE TABLE IF NOT EXISTS certificate_seq (
 ) ENGINE=InnoDB;
 
 INSERT IGNORE INTO institute (institute_id, name, address, principal_name, place) VALUES
- (1, 'Sinhgad College of Engineering',
+ (1, 'Apex Engineering College',
      'Vadgaon Budruk, Off Sinhgad Road, Pune - 411041, Maharashtra',
      'Dr. S. D. Lokhande', 'Pune');
+
+-- Upgrade existing installations that were seeded with the previous college and degree names.
+UPDATE institute
+SET name = 'Apex Engineering College'
+WHERE institute_id = 1 AND name = 'Sinhgad College of Engineering';
+
+UPDATE course
+SET course_name = CASE course_name
+    WHEN 'B.E. Computer Engineering' THEN 'B.Tech Computer Engineering'
+    WHEN 'M.E. Computer Engineering' THEN 'M.Tech Computer Engineering'
+    WHEN 'B.E. Information Technology' THEN 'B.Tech Information Technology'
+    WHEN 'B.E. Electronics and Telecommunication' THEN 'B.Tech Electronics and Telecommunication'
+    WHEN 'B.E. Mechanical Engineering' THEN 'B.Tech Mechanical Engineering'
+END
+WHERE course_name IN (
+    'B.E. Computer Engineering',
+    'M.E. Computer Engineering',
+    'B.E. Information Technology',
+    'B.E. Electronics and Telecommunication',
+    'B.E. Mechanical Engineering'
+);
 
 INSERT IGNORE INTO department (dept_name) VALUES
  ('Computer Engineering'), ('Information Technology'), ('Electronics and Telecommunication'), ('Mechanical Engineering');
 
 INSERT IGNORE INTO course (dept_id, course_name, duration_years)
 SELECT d.dept_id, x.course_name, x.duration_years FROM department d JOIN (
-  SELECT 'Computer Engineering' AS dept, 'B.E. Computer Engineering' AS course_name, 4 AS duration_years UNION ALL
-  SELECT 'Computer Engineering', 'M.E. Computer Engineering', 2 UNION ALL
-  SELECT 'Information Technology', 'B.E. Information Technology', 4 UNION ALL
-  SELECT 'Electronics and Telecommunication', 'B.E. Electronics and Telecommunication', 4 UNION ALL
-  SELECT 'Mechanical Engineering', 'B.E. Mechanical Engineering', 4
+  SELECT 'Computer Engineering' AS dept, 'B.Tech Computer Engineering' AS course_name, 4 AS duration_years UNION ALL
+  SELECT 'Computer Engineering', 'M.Tech Computer Engineering', 2 UNION ALL
+  SELECT 'Information Technology', 'B.Tech Information Technology', 4 UNION ALL
+  SELECT 'Electronics and Telecommunication', 'B.Tech Electronics and Telecommunication', 4 UNION ALL
+  SELECT 'Mechanical Engineering', 'B.Tech Mechanical Engineering', 4
 ) x ON x.dept = d.dept_name;
